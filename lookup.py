@@ -1,11 +1,18 @@
 #!/usr/bin/env python
 """
-#DNS(qd=[Q(name='hprinter.local')]) hprinter.local
-#DNS(qd=[Q(name='pvknoppix.local')]) pvknoppix.local
-#DNS(qd=[Q(name='microknoppix.local')]) microknoppix.local
-#DNS(qd=[Q(name='esp01.local')]) esp01.local
-#DNS(an=[RR(name='esp01.local', rdata='\n\x00\x00\x04', ttl=120, cls=32769)], op=33792) esp01.local 10.0.0.4
-#DNS(an=[RR(name='PVknoppix.local', rdata='\n\x00\x00\xc2', ttl=120, cls=32769)], op=33792) PVknoppix.local 10.0.0.194
+Usage examples:
+>>> DNS(qd=[Q(name='hprinter.local')])
+hprinter.local
+>>> DNS(qd=[Q(name='pvknoppix.local')])
+pvknoppix.local
+>>> DNS(qd=[Q(name='microknoppix.local')])
+microknoppix.local
+>>> DNS(qd=[Q(name='esp01.local')])
+esp01.local
+>>> DNS(an=[RR(name='esp01.local', rdata='\n\x00\x00\x04', ttl=120, cls=32769)], op=33792)
+esp01.local 10.0.0.4
+>>> DNS(an=[RR(name='PVknoppix.local', rdata='\n\x00\x00\xc2', ttl=120, cls=32769)], op=33792)
+PVknoppix.local 10.0.0.194
 """
 import socket
 import struct
