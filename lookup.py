@@ -14,6 +14,10 @@ VERBOSE_GLOBAL = False
 
 
 def lookup(hosts):
+    """
+    Returns a host/ip dictionary for the given host list.
+    """
+    hosts_ip = dict.fromkeys(hosts)
     UDP_IP = "0.0.0.0"
     UDP_PORT = 5353
     MCAST_GRP = '224.0.0.251'
@@ -31,6 +35,7 @@ def lookup(hosts):
                 '\x00\x00\x00\x00\x00\x00\x01\x00\x01')
         dns.qd[0].name = host
         sock.sendto(dns.pack(), (MCAST_GRP, UDP_PORT))
+    # receives until the end of the timeout
     sock.settimeout(5)
     while True:
         try:
@@ -39,14 +44,26 @@ def lookup(hosts):
                 print('%r %s' % (m[0], m[1]))
             dns = DNS(m[0])
             if len(dns.qd) > 0:
-                print("%r %s" % (dns, dns.qd[0].name)
+                if VERBOSE_GLOBAL:
+                    print("%r %s" % (dns, dns.qd[0].name))
             if len(dns.an) > 0 and dns.an[0].type == DNS_A:
-                print("%r %s %s" % (
-                        dns,
-                        dns.an[0].name,
-                        socket.inet_ntoa(dns.an[0].rdata)))
+                host = dns.an[0].name
+                ip = socket.inet_ntoa(dns.an[0].rdata)
+                if VERBOSE_GLOBAL:
+                    print("%r %s %s" % (dns, host, ip))
+                hosts_ip[host] = ip
         except socket.timeout:
             break
+    return hosts_ip
+
+
+def format_results(host_ip):
+    """
+    Format the result to the output in the form of:
+    host ip
+    """
+    for host, ip in host_ip.iteritems():
+        print("%s %s" % (host, ip))
 
 
 def main():
@@ -55,14 +72,15 @@ def main():
     """
     parser = argparse.ArgumentParser(description='Performs mDNS lookups.')
     parser.add_argument(
-            '-v', '--verbose', help='Adds output verbosity')
+            '-v', '--verbose', default=False, help='Adds output verbosity')
     parser.add_argument(
             'hosts', nargs='+', help='Hosts to resolve')
     args = parser.parse_args()
     global VERBOSE_GLOBAL
     VERBOSE_GLOBAL = args.verbose
     hosts = args.hosts
-    lookup(hosts)
+    hosts_ip = lookup(hosts)
+    format_results(hosts_ip)
 
 if __name__ == "__main__":
     main()
