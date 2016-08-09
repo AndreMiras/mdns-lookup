@@ -10,6 +10,8 @@ import socket
 import struct
 from dpkt.dns import DNS, DNS_A
 
+VERBOSE_GLOBAL = False
+
 
 def lookup(hosts):
     UDP_IP = "0.0.0.0"
@@ -33,13 +35,14 @@ def lookup(hosts):
     while True:
         try:
             m = sock.recvfrom(1024)
-            # print '%r'%m[0],m[1]
+            if VERBOSE_GLOBAL:
+                print('%r %s' % (m[0], m[1]))
             dns = DNS(m[0])
             if len(dns.qd) > 0:
-                print(dns.__repr__(), dns.qd[0].name)
+                print("%r %s" % (dns, dns.qd[0].name)
             if len(dns.an) > 0 and dns.an[0].type == DNS_A:
-                print("%s %s %s" % (
-                        dns.__repr__(),
+                print("%r %s %s" % (
+                        dns,
                         dns.an[0].name,
                         socket.inet_ntoa(dns.an[0].rdata)))
         except socket.timeout:
@@ -52,8 +55,12 @@ def main():
     """
     parser = argparse.ArgumentParser(description='Performs mDNS lookups.')
     parser.add_argument(
+            '-v', '--verbose', help='Adds output verbosity')
+    parser.add_argument(
             'hosts', nargs='+', help='Hosts to resolve')
     args = parser.parse_args()
+    global VERBOSE_GLOBAL
+    VERBOSE_GLOBAL = args.verbose
     hosts = args.hosts
     lookup(hosts)
 
