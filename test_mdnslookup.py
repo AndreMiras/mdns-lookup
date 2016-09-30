@@ -51,11 +51,9 @@ class TestCore(unittest.TestCase):
         with captured_output() as (out, err):
             format_results(hosts_ip)
             output = out.getvalue()
-            lines = output.split("\n")
-            self.assertTrue(
-                'raspberrypi.local' in lines[0])
-            self.assertTrue(
-                'whatever.local' in lines[1])
+            for host in hosts_ip.keys():
+                self.assertTrue(
+                    host in output)
 
 if __name__ == '__main__':
     unittest.main()
