@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='mdns-lookup',
-      version='20160809',
+      version='20160930',
       description='Python mDNS lookup',
       author='Andre Miras',
       url='https://github.com/AndreMiras/mdns-lookup',
