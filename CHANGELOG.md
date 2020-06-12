@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 - Automate PyPI releases from CI
+- Introduce isort and black code formatter
 
 ## [v20200612]
 - Setup continuous integration

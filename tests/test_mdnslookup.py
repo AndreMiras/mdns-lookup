@@ -27,7 +27,6 @@ def captured_output():
 
 
 class TestCore(unittest.TestCase):
-
     def test_lookup(self):
         """
         Verifies the lookup() function returns a dict as expected.
@@ -47,16 +46,13 @@ class TestCore(unittest.TestCase):
         """
         Verifies the format_results() correctly prints the results.
         """
-        hosts_ip = {
-            'raspberrypi.local': '192.168.1.116',
-            'whatever.local': None
-        }
+        hosts_ip = {"raspberrypi.local": "192.168.1.116", "whatever.local": None}
         with captured_output() as (out, err):
             format_results(hosts_ip)
             output = out.getvalue()
             for host in hosts_ip.keys():
-                self.assertTrue(
-                    host in output)
+                self.assertTrue(host in output)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

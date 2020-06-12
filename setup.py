@@ -9,14 +9,16 @@ def read(fname):
         return f.read()
 
 
-setup(name='mdns-lookup',
-      version='20200612.dev0',
-      description='Python mDNS lookup',
-      long_description=read("README.md"),
-      long_description_content_type="text/markdown",
-      author='Andre Miras',
-      url='https://github.com/AndreMiras/mdns-lookup',
-      py_modules=['mdnslookup'],
-      scripts=['mdnslookup/mdnslookup.py'],
-      setup_requires=['wheel'],
-      install_requires=['dpkt'])
+setup(
+    name="mdns-lookup",
+    version="20200612.dev0",
+    description="Python mDNS lookup",
+    long_description=read("README.md"),
+    long_description_content_type="text/markdown",
+    author="Andre Miras",
+    url="https://github.com/AndreMiras/mdns-lookup",
+    py_modules=["mdnslookup"],
+    scripts=["mdnslookup/mdnslookup.py"],
+    setup_requires=["wheel"],
+    install_requires=["dpkt"],
+)
