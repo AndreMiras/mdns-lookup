@@ -19,6 +19,7 @@ setup(
     url="https://github.com/AndreMiras/mdns-lookup",
     py_modules=["mdnslookup"],
     scripts=["mdnslookup/mdnslookup.py"],
+    entry_points={"console_scripts": ["mdnslookup = mdnslookup:main"]},
     setup_requires=["wheel"],
     install_requires=["dpkt"],
 )
