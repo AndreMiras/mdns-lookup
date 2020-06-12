@@ -1,6 +1,8 @@
 # mdns-lookup
 Python mDNS lookup
 
+[![Github Actions Tests](https://github.com/AndreMiras/mdns-lookup/workflows/Tests/badge.svg)](https://github.com/AndreMiras/mdns-lookup/actions?query=workflow%3ATests)
+
 This is based on the Stackoverflow answer http://stackoverflow.com/a/35853322/185510.
 
 ## Usage
