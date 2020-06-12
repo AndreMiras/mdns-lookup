@@ -5,9 +5,11 @@ Inspired from the stackoverflow answer:
 http://stackoverflow.com/a/35853322/185510
 """
 from __future__ import print_function
+
 import argparse
 import socket
 import struct
+
 from dpkt.dns import DNS, DNS_A
 
 VERBOSE_GLOBAL = False

@@ -2,10 +2,13 @@
 Verifies core features run as expected.
 """
 from __future__ import print_function
+
 import sys
 import unittest
 from contextlib import contextmanager
-from mdnslookup import lookup, format_results
+
+from mdnslookup import format_results, lookup
+
 try:
     from StringIO import StringIO
 except ImportError:
