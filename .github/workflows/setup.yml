@@ -5,9 +5,14 @@ on: [push, pull_request]
 jobs:
   checks:
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        python: [3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python }}
     - run: pip install --upgrade setuptools wheel twine
     - run: python setup.py sdist bdist_wheel
     - run: twine check dist/*
@@ -19,4 +24,5 @@ jobs:
     - name: Help command
       run: |
         . venv/bin/activate
+        mdnslookup --help
         mdnslookup.py --help

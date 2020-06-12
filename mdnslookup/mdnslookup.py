@@ -5,9 +5,11 @@ Inspired from the stackoverflow answer:
 http://stackoverflow.com/a/35853322/185510
 """
 from __future__ import print_function
+
 import argparse
 import socket
 import struct
+
 from dpkt.dns import DNS, DNS_A
 
 VERBOSE_GLOBAL = False
@@ -20,7 +22,7 @@ def lookup(hosts):
     hosts_ip = dict.fromkeys(hosts)
     UDP_IP = "0.0.0.0"
     UDP_PORT = 5353
-    MCAST_GRP = '224.0.0.251'
+    MCAST_GRP = "224.0.0.251"
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind((UDP_IP, UDP_PORT))
@@ -31,8 +33,9 @@ def lookup(hosts):
     for host in hosts:
         # the string in the following statement is an empty query packet
         dns = DNS(
-                b'\x00\x00\x01\x00\x00\x01\x00\x00' +
-                b'\x00\x00\x00\x00\x00\x00\x01\x00\x01')
+            b"\x00\x00\x01\x00\x00\x01\x00\x00"
+            + b"\x00\x00\x00\x00\x00\x00\x01\x00\x01"
+        )
         dns.qd[0].name = host
         sock.sendto(dns.pack(), (MCAST_GRP, UDP_PORT))
     # receives until the end of the timeout
@@ -41,7 +44,7 @@ def lookup(hosts):
         try:
             m = sock.recvfrom(1024)
             if VERBOSE_GLOBAL:
-                print('%r %s' % (m[0], m[1]))
+                print("%r %s" % (m[0], m[1]))
             dns = DNS(m[0])
             if len(dns.qd) > 0:
                 if VERBOSE_GLOBAL:
@@ -70,17 +73,16 @@ def main():
     """
     Parses sys args and calls the lookup function.
     """
-    parser = argparse.ArgumentParser(description='Performs mDNS lookups.')
-    parser.add_argument(
-            '-v', '--verbose', default=False, help='Adds output verbosity')
-    parser.add_argument(
-            'hosts', nargs='+', help='Hosts to resolve')
+    parser = argparse.ArgumentParser(description="Performs mDNS lookups.")
+    parser.add_argument("-v", "--verbose", default=False, help="Adds output verbosity")
+    parser.add_argument("hosts", nargs="+", help="Hosts to resolve")
     args = parser.parse_args()
     global VERBOSE_GLOBAL
     VERBOSE_GLOBAL = args.verbose
     hosts = args.hosts
     hosts_ip = lookup(hosts)
     format_results(hosts_ip)
+
 
 if __name__ == "__main__":
     main()
