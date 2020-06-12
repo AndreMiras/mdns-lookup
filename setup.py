@@ -8,5 +8,5 @@ setup(name='mdns-lookup',
       author='Andre Miras',
       url='https://github.com/AndreMiras/mdns-lookup',
       py_modules=['mdnslookup'],
-      scripts=['mdnslookup.py'],
+      scripts=['mdnslookup/mdnslookup.py'],
       install_requires=['dpkt'])
