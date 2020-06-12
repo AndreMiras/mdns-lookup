@@ -31,8 +31,8 @@ def lookup(hosts):
     for host in hosts:
         # the string in the following statement is an empty query packet
         dns = DNS(
-                '\x00\x00\x01\x00\x00\x01\x00\x00' +
-                '\x00\x00\x00\x00\x00\x00\x01\x00\x01')
+                b'\x00\x00\x01\x00\x00\x01\x00\x00' +
+                b'\x00\x00\x00\x00\x00\x00\x01\x00\x01')
         dns.qd[0].name = host
         sock.sendto(dns.pack(), (MCAST_GRP, UDP_PORT))
     # receives until the end of the timeout
@@ -62,7 +62,7 @@ def format_results(host_ip):
     Format the result to the output in the form of:
     host ip
     """
-    for host, ip in host_ip.iteritems():
+    for host, ip in host_ip.items():
         print("%s %s" % (host, ip))
 
 
