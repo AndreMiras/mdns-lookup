@@ -1,0 +1,22 @@
+name: setup
+
+on: [push, pull_request]
+
+jobs:
+  checks:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+    - run: pip install --upgrade setuptools wheel twine
+    - run: python setup.py sdist bdist_wheel
+    - run: twine check dist/*
+    - name: Local install
+      run: |
+        python -m venv venv
+        . venv/bin/activate
+        pip install dist/mdns-lookup-*.tar.gz
+    - name: Help command
+      run: |
+        . venv/bin/activate
+        mdnslookup.py --help
