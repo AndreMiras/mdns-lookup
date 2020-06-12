@@ -9,7 +9,7 @@ def read(fname):
 
 
 setup(name='mdns-lookup',
-      version='20160930',
+      version='20200612',
       description='Python mDNS lookup',
       long_description=read("README.md"),
       long_description_content_type="text/markdown",
